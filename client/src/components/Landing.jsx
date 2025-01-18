@@ -12,7 +12,7 @@ function Landing() {
     <div className="min-h-screen bg-neutral-950">
       <Spotlight />
       {/* Header */}
-      <header className="fixed top-0 w-full border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-sm">
+      <header className="fixed top-0 w-full border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-sm z-10">
         <div className="relative overflow-hidden">
           <div className="header-flash" />
           <div className="header-top-flash" />
