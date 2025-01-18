@@ -1,5 +1,4 @@
 "use client";
-
 import {
   BarChart,
   Bar,
@@ -26,10 +25,8 @@ const monthlyData = [
 // Pie chart data
 const pieData = [
   { name: "Tier", value: monthlyData.reduce((acc, curr) => acc + curr.Desktop, 0) },
-  // { name: "Mobile", value: monthlyData.reduce((acc, curr) => acc + curr.Mobile, 0) },
 ];
 
-// Colors for charts (neutral shades)
 const COLORS = ["#6B7280", "#374151"]; // Neutral shades (gray)
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -57,20 +54,15 @@ const BarChartComponent = ({ title, subtitle }) => (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={monthlyData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-          <XAxis
-            dataKey="name"
-            stroke="#9CA3AF"
-            fontSize={12}
-            tick={{ fill: "#9CA3AF" }}
-          />
-          <YAxis
-            stroke="#9CA3AF"
-            fontSize={12}
-            tick={{ fill: "#9CA3AF" }}
-          />
+          <XAxis dataKey="name" fontSize={12} tick={{ fill: "#9CA3AF" }} />
+          <YAxis  fontSize={12} tick={{ fill: "#9CA3AF" }} />
           <Tooltip content={<CustomTooltip />} />
-          <Bar dataKey="Desktop" fill={COLORS[0]} radius={[4, 4, 0, 0]} />
-          {/* <Bar dataKey="Mobile" fill={COLORS[1]} radius={[4, 4, 0, 0]} /> */}
+          <Bar
+            dataKey="Desktop"
+            fill={COLORS[0]}
+            radius={[4, 4, 0, 0]}
+            isAnimationActive={false}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -84,7 +76,7 @@ export default function TierGraph() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Q1 Performance */}
           <Card className="p-6 bg-neutral-800">
-            <BarChartComponent title="Tier Distribution" subtitle="Distribution between diffrent cities" />
+            <BarChartComponent title="Tier Distribution" subtitle="Distribution between different cities" />
           </Card>
 
           {/* Total Distribution */}
@@ -107,7 +99,10 @@ export default function TierGraph() {
                       dataKey="value"
                     >
                       {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
