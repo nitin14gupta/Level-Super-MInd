@@ -14,8 +14,9 @@ export default function Home() {
       <Headder/>
       <Landing />
       <Competitors />
-      <BestHooks />
-      <CrazyWordCloud />
+      <div className="flex justify-around"><BestHooks />
+      <CrazyWordCloud /></div>
+      
       <GeneratedTagline>                                                                        </GeneratedTagline>
       <SatisfactoryAnalysis />
       <TierGraph />
