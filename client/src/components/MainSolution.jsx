@@ -14,7 +14,7 @@ export default function MainSolution() {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center space-y-6 mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-red-500">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-white">
             Enterprise-Grade Solutions
           </h1>
           
@@ -31,9 +31,9 @@ export default function MainSolution() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             
             {/* Content */}
-            <div className="relative p-8 md:p-12">
+            <div className="relative p-8 md:p-12 bg-[#171f28]">
               <div className="max-w-6xl">
-                <p className="text-lg md:text-xl text-foreground leading-relaxed">
+                <p className="text-lg md:text-xl text-neutral-300 leading-relaxed">
                   {solution.description}
                 </p>
               </div>
