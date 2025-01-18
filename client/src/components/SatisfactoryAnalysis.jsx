@@ -1,73 +1,132 @@
 "use client"
-import React, { useState } from "react";
 
-function SatisfactoryAnalysis() {
-  const [tiers, setTiers] = useState({
-    tier1: 70,
-    tier2: 50,
-    tier3: 30,
-  });
+import { TrendingUp } from "lucide-react"
+import { PolarRadiusAxis, RadialBar, RadialBarChart, Label } from "recharts"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
 
-  return (
-    <div className="p-8 bg-black min-h-screen text-gray-200 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-8 text-gray-100">Satisfactory Analysis</h1>
-      <div className="grid grid-cols-3 gap-8 w-full max-w-5xl">
-        {/* Tier 1 */}
-        <div className="flex flex-col items-center bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-lg font-semibold text-blue-400 mb-4">Tier 1</h2>
-          <div className="relative w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center">
-            <div
-              className="absolute top-0 left-0 w-24 h-24 rounded-full bg-blue-500"
-              style={{
-                clipPath: `polygon(50% 50%, 50% 0%, ${
-                  50 + 50 * Math.cos((tiers.tier1 / 100) * Math.PI * 2 - Math.PI / 2)
-                }% ${
-                  50 + 50 * Math.sin((tiers.tier1 / 100) * Math.PI * 2 - Math.PI / 2)
-                }%, 50% 50%)`,
-              }}
-            ></div>
-            <p className="text-gray-100 text-lg font-bold">{tiers.tier1}%</p>
-          </div>
-        </div>
+// Chart data for each tier
+const tierData = [
+  { name: "Tier 1", interested: 80, notInterested: 20 },
+  { name: "Tier 2", interested: 65, notInterested: 35 },
+  { name: "Tier 3", interested: 50, notInterested: 50 },
+]
 
-        {/* Tier 2 */}
-        <div className="flex flex-col items-center bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-lg font-semibold text-green-400 mb-4">Tier 2</h2>
-          <div className="relative w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center">
-            <div
-              className="absolute top-0 left-0 w-24 h-24 rounded-full bg-green-500"
-              style={{
-                clipPath: `polygon(50% 50%, 50% 0%, ${
-                  50 + 50 * Math.cos((tiers.tier2 / 100) * Math.PI * 2 - Math.PI / 2)
-                }% ${
-                  50 + 50 * Math.sin((tiers.tier2 / 100) * Math.PI * 2 - Math.PI / 2)
-                }%, 50% 50%)`,
-              }}
-            ></div>
-            <p className="text-gray-100 text-lg font-bold">{tiers.tier2}%</p>
-          </div>
-        </div>
-
-        {/* Tier 3 */}
-        <div className="flex flex-col items-center bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-lg font-semibold text-red-400 mb-4">Tier 3</h2>
-          <div className="relative w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center">
-            <div
-              className="absolute top-0 left-0 w-24 h-24 rounded-full bg-red-500"
-              style={{
-                clipPath: `polygon(50% 50%, 50% 0%, ${
-                  50 + 50 * Math.cos((tiers.tier3 / 100) * Math.PI * 2 - Math.PI / 2)
-                }% ${
-                  50 + 50 * Math.sin((tiers.tier3 / 100) * Math.PI * 2 - Math.PI / 2)
-                }%, 50% 50%)`,
-              }}
-            ></div>
-            <p className="text-gray-100 text-lg font-bold">{tiers.tier3}%</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+const chartConfig = {
+  Interested: {
+    label: "Interested",
+    color: "hsl(220, 90%, 55%)",
+  },
+  "Not Interested": {
+    label: "Not Interested",
+    color: "hsl(0, 70%, 55%)",
+  },
 }
 
-export default SatisfactoryAnalysis;
+function SatisfactoryAnalysis() {
+  return (
+    <div className="flex flex-wrap justify-center gap-6 bg-gray-900 p-6">
+      {tierData.map((tier, index) => {
+        const totalResponses = tier.interested + tier.notInterested
+        const chartData = [
+          { status: "Interested", value: tier.interested },
+          { status: "Not Interested", value: tier.notInterested },
+        ]
+
+        return (
+          <Card
+            key={index}
+            className="flex flex-col w-full max-w-xs bg-gray-800 text-gray-200"
+          >
+            <CardHeader className="items-center pb-0">
+              <CardTitle>{tier.name}</CardTitle>
+              <CardDescription>Feedback Data - January 2024</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-1 items-center pb-0">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square w-full max-w-[200px]"
+              >
+                <RadialBarChart
+                  data={chartData}
+                  endAngle={180}
+                  innerRadius={80}
+                  outerRadius={130}
+                  barSize={10}
+                >
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+                    <Label
+                      content={({ viewBox }) => {
+                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                          return (
+                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
+                              <tspan
+                                x={viewBox.cx}
+                                y={(viewBox.cy || 0) - 16}
+                                className="fill-gray-100 text-2xl font-bold"
+                              >
+                                {totalResponses}
+                              </tspan>
+                              <tspan
+                                x={viewBox.cx}
+                                y={(viewBox.cy || 0) + 4}
+                                className="fill-gray-400"
+                              >
+                                Responses
+                              </tspan>
+                            </text>
+                          )
+                        }
+                      }}
+                    />
+                  </PolarRadiusAxis>
+                  <RadialBar
+                    dataKey="value"
+                    name="Interested"
+                    stackId="a"
+                    fill="hsl(220, 90%, 55%)"
+                    cornerRadius={5}
+                    className="stroke-transparent stroke-2"
+                  />
+                  <RadialBar
+                    dataKey="value"
+                    name="Not Interested"
+                    stackId="a"
+                    fill="hsl(0, 70%, 55%)"
+                    cornerRadius={5}
+                    className="stroke-transparent stroke-2"
+                  />
+                </RadialBarChart>
+              </ChartContainer>
+            </CardContent>
+            <CardFooter className="flex-col gap-2 text-sm">
+              <div className="flex items-center gap-2 font-medium leading-none text-green-400">
+                Trending up by {5 * (index + 1)}% this month{" "}
+                <TrendingUp className="h-4 w-4" />
+              </div>
+              <div className="leading-none text-gray-400">
+                Showing feedback data for the past 6 months
+              </div>
+            </CardFooter>
+          </Card>
+        )
+      })}
+    </div>
+  )
+}
+export default SatisfactoryAnalysis

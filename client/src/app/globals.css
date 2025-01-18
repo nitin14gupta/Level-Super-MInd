@@ -6,6 +6,9 @@
   body {
     @apply bg-neutral-950 text-neutral-100;
   }
+  :root {
+    --radius: 0.5rem;
+  }
 }
 
 @layer components {
