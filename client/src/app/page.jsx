@@ -7,6 +7,7 @@ import CrazyWordCloud from "@/components/CrazyWordCloud";
 import GeneratedTagline from "@/components/GeneratedTagline";
 import TierGraph from "@/components/TierGraph";
 import Headder from "@/components/Headder";
+import MainSolution from "@/components/MainSolution";
 
 export default function Home() {
   return (
@@ -17,7 +18,8 @@ export default function Home() {
       <div className="flex justify-around"><BestHooks />
       <CrazyWordCloud /></div>
       
-      <GeneratedTagline>                                                                        </GeneratedTagline>
+      <GeneratedTagline />
+      <MainSolution />                                                                      
       <SatisfactoryAnalysis />
       <TierGraph />
     </div>
