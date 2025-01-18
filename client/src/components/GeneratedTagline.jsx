@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { Card } from "@/components/ui/card";
+import { Sparkles, Quote } from "lucide-react";
 
 function GeneratedTagline() {
   const [taglines] = useState([
@@ -8,17 +10,65 @@ function GeneratedTagline() {
     "Connecting creators to their fans.",
     "Your platform for intimate connections.",
   ]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((current) => (current + 1) % taglines.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [taglines.length]);
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 bg-black text-white py-8">
-      <h1 className="text-3xl font-bold">Generated Taglines</h1>
-      <div className="space-y-2">
-        {taglines.map((tagline, index) => (
-          <p key={index} className="text-xl italic">
-            {tagline}
-          </p>
-        ))}
-      </div>
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <Card className="w-full max-w-2xl bg-gradient-to-br from-background to-muted/30 backdrop-blur-sm border border-muted/20">
+        <div className="p-8 space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+              <h1 className="text-2xl font-semibold tracking-tight">Generated Taglines</h1>
+            </div>
+            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <Quote className="w-4 h-4 text-primary" />
+            </div>
+          </div>
+
+          <div className="relative h-[120px] overflow-hidden">
+            {taglines.map((tagline, index) => (
+              <div
+                key={index}
+                className={`absolute w-full transition-all duration-100 ease-in-out ${
+                  index === activeIndex
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <div className="relative">
+                  <div className="absolute -left-4 top-1/2 w-2 h-2 rounded-full bg-primary/50" />
+                  <p className="text-2xl font-light text-foreground/90 italic pl-4">
+                    {tagline}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center gap-2">
+            {taglines.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === activeIndex
+                    ? "bg-primary w-8"
+                    : "bg-muted-foreground/20 hover:bg-muted-foreground/40"
+                }`}
+                aria-label={`Show tagline ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }
