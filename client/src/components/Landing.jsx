@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Palette } from 'lucide-react';
 import { Spotlight } from './ui/Spotlight';
 
-
 function Landing() {
   const [niche, setNiche] = useState('');
   const [description, setDescription] = useState('');

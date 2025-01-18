@@ -55,7 +55,7 @@ function SatisfactoryAnalysis() {
             <CardContent className="flex flex-1 items-center pb-0">
               <ChartContainer
                 config={chartConfig}
-                className="mx-auto aspect-square w-full max-w-[220px] h-[240px]" // Set explicit height
+                className="mx-auto aspect-square w-full max-w-[220px] h-[240px]"
               >
                 <RadialBarChart
                   data={chartData}
