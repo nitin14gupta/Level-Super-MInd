@@ -26,20 +26,19 @@ const monthlyData = [
 // Pie chart data
 const pieData = [
   { name: "Desktop", value: monthlyData.reduce((acc, curr) => acc + curr.Desktop, 0) },
-  { name: "Mobile", value: monthlyData.reduce((acc, curr) => acc + curr.Mobile, 0) }
+  { name: "Mobile", value: monthlyData.reduce((acc, curr) => acc + curr.Mobile, 0) },
 ];
 
-// Colors for charts
-const COLORS = ["hsl(var(--primary))", "hsl(var(--destructive))"];
+// Colors for charts (neutral shades)
+const COLORS = ["#6B7280", "#374151"]; // Neutral shades (gray)
 
-// Custom Tooltip component
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-background/95 border p-2 rounded-lg shadow-lg backdrop-blur-sm">
-        <p className="font-medium">{label}</p>
+      <div className="bg-neutral-900 border border-neutral-700 p-2 rounded-lg shadow-lg">
+        <p className="font-medium text-white">{label}</p>
         {payload.map((entry, index) => (
-          <p key={index} className="text-sm">
+          <p key={index} className="text-sm text-neutral-400">
             {entry.name}: {entry.value}
           </p>
         ))}
@@ -49,26 +48,25 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-// BarChartComponent now receives props
 const BarChartComponent = ({ title, subtitle }) => (
   <div className="space-y-4">
     <div>
-      <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-      <p className="text-sm text-muted-foreground">{subtitle}</p>
+      <h2 className="text-xl font-semibold text-white">{title}</h2>
+      <p className="text-sm text-neutral-400">{subtitle}</p>
     </div>
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={monthlyData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
           <XAxis
             dataKey="name"
-            stroke="hsl(var(--muted-foreground))"
+            stroke="#9CA3AF"
             fontSize={12}
-            tick={{ fill: "hsl(var(--muted-foreground))" }}
+            tick={{ fill: "#9CA3AF" }}
           />
           <YAxis
-            stroke="hsl(var(--muted-foreground))"
+            stroke="#9CA3AF"
             fontSize={12}
-            tick={{ fill: "hsl(var(--muted-foreground))" }}
+            tick={{ fill: "#9CA3AF" }}
           />
           <Tooltip content={<CustomTooltip />} />
           <Bar dataKey="Desktop" fill={COLORS[0]} radius={[4, 4, 0, 0]} />
@@ -81,20 +79,20 @@ const BarChartComponent = ({ title, subtitle }) => (
 
 export default function TierGraph() {
   return (
-    <div className="min-h-screen bg-background p-8">
+    <div className="min-h-screen bg-black p-8">
       <div className="max-w-[1400px] mx-auto space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Q1 Performance */}
-          <Card className="p-6">
+          <Card className="p-6 bg-neutral-800">
             <BarChartComponent title="Q1 Performance" subtitle="Desktop vs Mobile usage (Jan-Mar)" />
           </Card>
 
           {/* Total Distribution */}
-          <Card className="p-6">
+          <Card className="p-6 bg-neutral-800">
             <div className="space-y-4">
               <div>
-                <h2 className="text-xl font-semibold tracking-tight">Total Distribution</h2>
-                <p className="text-sm text-muted-foreground">Overall platform usage</p>
+                <h2 className="text-xl font-semibold text-white">Total Distribution</h2>
+                <p className="text-sm text-neutral-400">Overall platform usage</p>
               </div>
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -118,19 +116,19 @@ export default function TierGraph() {
               </div>
               <div className="flex items-center justify-center gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-primary rounded" />
-                  <span className="text-sm text-muted-foreground">Desktop</span>
+                  <div className="w-3 h-3 bg-gray-500 rounded" />
+                  <span className="text-sm text-neutral-400">Desktop</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-destructive rounded" />
-                  <span className="text-sm text-muted-foreground">Mobile</span>
+                  <div className="w-3 h-3 bg-gray-800 rounded" />
+                  <span className="text-sm text-neutral-400">Mobile</span>
                 </div>
               </div>
             </div>
           </Card>
 
           {/* Q2 Performance */}
-          <Card className="p-6">
+          <Card className="p-6 bg-neutral-800">
             <BarChartComponent title="Q2 Performance" subtitle="Desktop vs Mobile usage (Apr-Jun)" />
           </Card>
         </div>
