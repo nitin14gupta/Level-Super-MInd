@@ -1,4 +1,5 @@
 import React from "react";
+import { ExternalLink, TrendingUp, Target, Hash, Globe, Icon } from 'lucide-react';
 
 const data = {
   competitors: [
@@ -50,53 +51,76 @@ const data = {
   ],
 };
 
+// Updated DetailItem component
+function DetailItem({ icon: IconComponent, label, items }) {
+  return (
+    <div className="detail-item -z-10">
+      <IconComponent className="w-4 h-4 text-gray-500 mt-0.5" />
+      <div>
+        <span className="detail-label">{label}</span>
+        <div className="detail-content">
+          {items.map((item, i) => (
+            <span key={i} className="tag">{item}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Competitors() {
   return (
-    <div className="p-6 bg-black min-h-screen text-gray-200">
-      <h1 className="text-2xl font-bold mb-6 text-gray-100">Competitor Overview</h1>
-      <div className="space-y-4">
-        {data.competitors.map((competitor, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between p-4 bg-gray-800 rounded-lg shadow-md"
-          >
-            {/* Competitor Name */}
-            <div className="flex-1">
-              <a
-                href={competitor.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 font-semibold hover:text-blue-300"
-              >
-                {competitor.name}
-              </a>
-            </div>
+    <div className="p-8 min-h-screen overflow-hidden -z-10">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent">
+          Competitor Overview
+        </h1>
+        <p className="text-gray-500 mb-12">Analyzing the market landscape and competitive strategies</p>
+        
+        <div className="space-y-8">
+          {data.competitors.map((competitor, index) => (
+            <div key={index} className="competitor-card">
+              <div className={`tier-badge ${competitor.tier_focus === 1 ? 'tier-badge-1' : 'tier-badge-2'}`}>
+                {competitor.tier_focus === 1 ? '1st Tier' : '2nd Tier'}
+              </div>
 
-            {/* Competitor Details */}
-            <div className="flex-1 text-sm text-gray-400">
-              <p>
-                <strong>Strategy:</strong> {competitor.strategy.join(", ")}
-              </p>
-              <p>
-                <strong>Tier:</strong>{" "}
-                {competitor.tier_focus === 1 ? "1st Tier" : "2nd Tier"}
-              </p>
-              <p>
-                <strong>Trends:</strong> {competitor.trends.join(", ")}
-              </p>
-              <p>
-                <strong>Keywords:</strong> {competitor.keywords.join(", ")}
-              </p>
-            </div>
+              <div className="flex-1 space-y-6">
+                <a
+                  href={competitor.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="competitor-link"
+                >
+                  {competitor.name}
+                  <ExternalLink className="w-4 h-4" />
+                </a>
 
-            {/* Social Platform */}
-            <div className="flex-1 text-right text-gray-300">
-              <p>
-                <strong>Platform:</strong> {competitor.social_platform}
-              </p>
+                <div className="detail-section">
+                  <DetailItem 
+                    icon={Target} 
+                    label="Strategy" 
+                    items={competitor.strategy} 
+                  />
+                  <DetailItem 
+                    icon={TrendingUp} 
+                    label="Trends" 
+                    items={competitor.trends} 
+                  />
+                  <DetailItem 
+                    icon={Hash} 
+                    label="Keywords" 
+                    items={competitor.keywords} 
+                  />
+                  <DetailItem 
+                    icon={Globe} 
+                    label="Platform" 
+                    items={[competitor.social_platform]} 
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
