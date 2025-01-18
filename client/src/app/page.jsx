@@ -6,11 +6,12 @@ import BestHooks from "@/components/BestHooks";
 import CrazyWordCloud from "@/components/CrazyWordCloud";
 import GeneratedTagline from "@/components/GeneratedTagline";
 import TierGraph from "@/components/TierGraph";
+import Headder from "@/components/Headder";
 
 export default function Home() {
   return (
     <div>
-      Hello, world!
+      <Headder/>
       <Landing />
       <Competitors />
       <BestHooks></BestHooks>
