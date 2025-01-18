@@ -14,11 +14,11 @@ export default function Home() {
       <Headder/>
       <Landing />
       <Competitors />
-      <BestHooks></BestHooks>
-      <CrazyWordCloud></CrazyWordCloud>
+      <BestHooks />
+      <CrazyWordCloud />
       <GeneratedTagline>                                                                        </GeneratedTagline>
       <SatisfactoryAnalysis />
-      <TierGraph></TierGraph>
+      <TierGraph />
     </div>
   );
 }
