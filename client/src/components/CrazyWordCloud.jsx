@@ -1,56 +1,46 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 
 const initialWords = [
-  "Adult",
-  "Chat",
-  "Videocall",
-  "Dating",
-  "Relationship",
-  "Intimacy",
-  "Sex",
-  "Romance",
-  "Flirting",
-  "Cam",
-  "Live",
-  "Streaming",
-  "Webcam",
-  "Virtual",
-  "Reality",
-  "Adulting",
-  "Mature",
-  "Discreet",
-  "Private",
-  "Secure",
-  "Encryption",
-  "Safety",
-  "Consent",
-  "Communication",
-  "Community",
-  "Platform",
+  "Innovation",
+  "Technology",
+  "Growth",
+  "Strategy",
+  "Teamwork",
+  "Success",
+  "Client",
+  "Development",
+  "Integrity",
+  "Design",
+  "Sustainability",
+  "Solutions",
+  "Efficiency",
+  "Empowerment",
+  "Knowledge",
+  "Research",
+  "Creativity",
+  "Leadership",
+  "Collaboration",
+  "Transformation",
+  "Inspiration",
+  "Quality",
+  "Performance",
+  "Adaptability",
+  "Focus",
+  "Excellence",
+  "Productivity",
 ];
 
 function OrderedWordCloud() {
-  const [words] = useState(initialWords);
-
-  // Generate random font sizes for each word
-  const getFontSize = () => `${Math.floor(Math.random() * 24) + 16}px`; // Between 16px and 40px
-
   return (
-    <div className="bg-black text-white min-h-screen flex items-center justify-center">
-      <div className="grid grid-cols-4 gap-6 p-8 max-w-screen-lg">
-        {words.map((word, index) => (
-          <span
+    <div className="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center p-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-screen-xl">
+        {initialWords.map((word, index) => (
+          <div
             key={index}
-            className="font-bold"
-            style={{
-              fontSize: getFontSize(),
-              color: `hsl(${Math.random() * 360}, 70%, 60%)`, // Random vibrant colors
-            }}
+            className="p-4 bg-gray-800 text-center rounded-lg shadow-md hover:bg-gray-700 transition-all duration-300"
           >
-            {word}
-          </span>
+            <span className="text-lg font-medium">{word}</span>
+          </div>
         ))}
       </div>
     </div>
