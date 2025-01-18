@@ -25,8 +25,8 @@ const monthlyData = [
 
 // Pie chart data
 const pieData = [
-  { name: "Desktop", value: monthlyData.reduce((acc, curr) => acc + curr.Desktop, 0) },
-  { name: "Mobile", value: monthlyData.reduce((acc, curr) => acc + curr.Mobile, 0) },
+  { name: "Tier", value: monthlyData.reduce((acc, curr) => acc + curr.Desktop, 0) },
+  // { name: "Mobile", value: monthlyData.reduce((acc, curr) => acc + curr.Mobile, 0) },
 ];
 
 // Colors for charts (neutral shades)
@@ -70,7 +70,7 @@ const BarChartComponent = ({ title, subtitle }) => (
           />
           <Tooltip content={<CustomTooltip />} />
           <Bar dataKey="Desktop" fill={COLORS[0]} radius={[4, 4, 0, 0]} />
-          <Bar dataKey="Mobile" fill={COLORS[1]} radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="Mobile" fill={COLORS[1]} radius={[4, 4, 0, 0]} /> */}
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -84,15 +84,15 @@ export default function TierGraph() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Q1 Performance */}
           <Card className="p-6 bg-neutral-800">
-            <BarChartComponent title="Q1 Performance" subtitle="Desktop vs Mobile usage (Jan-Mar)" />
+            <BarChartComponent title="Tier Distribution" subtitle="Distribution between diffrent cities" />
           </Card>
 
           {/* Total Distribution */}
           <Card className="p-6 bg-neutral-800">
             <div className="space-y-4">
               <div>
-                <h2 className="text-xl font-semibold text-white">Total Distribution</h2>
-                <p className="text-sm text-neutral-400">Overall platform usage</p>
+                <h2 className="text-xl font-semibold text-white">Age percentage</h2>
+                <p className="text-sm text-neutral-400">Overall Age Distribution</p>
               </div>
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">

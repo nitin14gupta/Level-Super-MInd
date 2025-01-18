@@ -12,6 +12,9 @@ function Headder() {
             <div className="flex items-center space-x-2">
               <ScanSearch className="h-8 w-8 text-neutral-400" />
               <span className="text-xl font-bold tracking-tight text-neutral-100">MarketLens</span>
+              <div>
+                <span className="text-sm text-neutral-400">Clarity through competition</span>
+              </div>
             </div>
           </div>
         </div>
