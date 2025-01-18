@@ -8,6 +8,7 @@ import GeneratedTagline from "@/components/GeneratedTagline";
 import TierGraph from "@/components/TierGraph";
 import Headder from "@/components/Headder";
 import MainSolution from "@/components/MainSolution";
+import FutureTrendPrediction from "@/components/FutureTrendPrediction";
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
       <Competitors />
       <div className="flex justify-around"><BestHooks />
       <CrazyWordCloud /></div>
-      
+      <FutureTrendPrediction />
       <GeneratedTagline />
       <MainSolution />                                                                      
       <SatisfactoryAnalysis />
