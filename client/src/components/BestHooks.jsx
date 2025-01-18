@@ -10,11 +10,11 @@ const hooksData = [
 
 function BestHooks() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-800 to-gray-900 p-8">
+    <div className="min-h-screen  p-8">
       <h1 className="text-4xl sm:text-5xl font-extrabold text-white text-center mb-12 tracking-wide">
         Best Performing Hooks
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-8">
         {hooksData.map((item, index) => (
           <div
             key={index}

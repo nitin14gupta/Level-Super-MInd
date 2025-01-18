@@ -31,9 +31,13 @@ const initialWords = [
 ];
 
 function OrderedWordCloud() {
-  return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center p-8">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-screen-xl">
+  return (<div>
+    <h1 className="text-4xl mt-5 sm:text-5xl font-extrabold text-white text-center  tracking-wide">
+        Word Colud
+      </h1>
+      <div className="min-h-screen  text-gray-100 flex items-center justify-center ">
+      
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 max-w-screen-xl">
         {initialWords.map((word, index) => (
           <div
             key={index}
@@ -44,6 +48,8 @@ function OrderedWordCloud() {
         ))}
       </div>
     </div>
+  </div>
+    
   );
 }
 
