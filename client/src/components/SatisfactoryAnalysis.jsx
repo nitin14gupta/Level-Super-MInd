@@ -51,12 +51,11 @@ function SatisfactoryAnalysis() {
           >
             <CardHeader className="items-center pb-0">
               <CardTitle>{tier.name}</CardTitle>
-              <CardDescription>Feedback Data - January 2024</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-1 items-center pb-0">
               <ChartContainer
                 config={chartConfig}
-                className="mx-auto aspect-square w-full max-w-[200px]"
+                className="mx-auto aspect-square w-full max-w-[220px] h-[240px]" // Set explicit height
               >
                 <RadialBarChart
                   data={chartData}
@@ -70,30 +69,6 @@ function SatisfactoryAnalysis() {
                     content={<ChartTooltipContent hideLabel />}
                   />
                   <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-                    <Label
-                      content={({ viewBox }) => {
-                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                          return (
-                            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
-                              <tspan
-                                x={viewBox.cx}
-                                y={(viewBox.cy || 0) - 16}
-                                className="fill-gray-100 text-2xl font-bold"
-                              >
-                                {totalResponses}
-                              </tspan>
-                              <tspan
-                                x={viewBox.cx}
-                                y={(viewBox.cy || 0) + 4}
-                                className="fill-gray-400"
-                              >
-                                Responses
-                              </tspan>
-                            </text>
-                          )
-                        }
-                      }}
-                    />
                   </PolarRadiusAxis>
                   <RadialBar
                     dataKey="value"
@@ -114,19 +89,11 @@ function SatisfactoryAnalysis() {
                 </RadialBarChart>
               </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-              <div className="flex items-center gap-2 font-medium leading-none text-green-400">
-                Trending up by {5 * (index + 1)}% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-gray-400">
-                Showing feedback data for the past 6 months
-              </div>
-            </CardFooter>
           </Card>
         )
       })}
     </div>
   )
 }
+
 export default SatisfactoryAnalysis
