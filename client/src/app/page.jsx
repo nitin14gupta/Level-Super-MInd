@@ -1,10 +1,10 @@
 import Image from "next/image";
-import Test from "@/components/test";
+import Competitors from "@/components/Competitors";
 export default function Home() {
   return (
     <div>
       Hello, world!
-      <Test></Test>
+      <Competitors />
     </div>
   );
 }
