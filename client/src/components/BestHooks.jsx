@@ -4,42 +4,25 @@ import React, { useEffect, useState } from "react";
 function BestHooks() {
   const [hooksData, setHooksData] = useState([]); // State to hold hooks data
   const [loading, setLoading] = useState(true); // State for loading
-  const [error, setError] = useState(null); // State for errors
 
   useEffect(() => {
-    try {
-      // Retrieve data from localStorage
-      const storedData = localStorage.getItem("researcherData");
-      console.log("Data retrieved from localStorage:", JSON.parse(storedData));
+    // Simulate an API or data fetching process with dummy data
+    const dummyData = [
+      { name: "Custom Hook 1", hooks: "Handles API calls efficiently." },
+      { name: "Custom Hook 2", hooks: "Manages complex form state." },
+      { name: "Custom Hook 3", hooks: "Optimizes re-renders in components." },
+    ];
 
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        const hooks = parsedData?.data?.output_text_2?.top_competitors || [];
-        setHooksData(hooks); // Update state with retrieved data
-      } else {
-        setError("No data found in localStorage."); // Handle missing data
-      }
-
+    setTimeout(() => {
+      setHooksData(dummyData); // Set the dummy data
       setLoading(false); // Set loading to false
-    } catch (err) {
-      console.error("Error parsing data from localStorage:", err);
-      setError("Failed to retrieve data from localStorage.");
-      setLoading(false);
-    }
+    }, 1000); // Simulated delay
   }, []); // Empty dependency array to run only once
 
   if (loading) {
     return (
       <div className="min-h-screen p-8 flex items-center justify-center">
         <p className="text-white text-xl font-bold">Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen p-8 flex items-center justify-center">
-        <p className="text-red-500 text-xl font-bold">{error}</p>
       </div>
     );
   }

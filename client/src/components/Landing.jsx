@@ -8,7 +8,7 @@ function Landing() {
   const [niche, setNiche] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const { trigger, setTrigger } = useTrigger("");
+  const { trigger, setTrigger } = useTrigger('');
 
   const handleSubmit = async () => {
     if (!niche || !description) {
