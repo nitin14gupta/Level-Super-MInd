@@ -26,10 +26,20 @@ function Landing() {
         "https://level-super-mind.onrender.com/researcher",
         payload
       );
-      console.log("Response:", response.data);
-      alert("Request sent successfully!");
+
+      // Debugging: Log the response
+      console.log("Response from API:", response.data);
+
+      // Save response to localStorage
+      localStorage.setItem("researcherData", JSON.stringify(response.data));
+
+      // Debugging: Verify that data is saved
+      const storedData = localStorage.getItem("researcherData");
+      console.log("Data retrieved from localStorage:", JSON.parse(storedData));
+
+      alert("Request sent and data stored successfully!");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error during API request:", error);
       alert("An error occurred while sending the request.");
     } finally {
       setLoading(false);
