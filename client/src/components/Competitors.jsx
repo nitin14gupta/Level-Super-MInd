@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { ExternalLink, TrendingUp, Target, Hash, Globe } from "lucide-react";
+import { useTrigger } from '../context/TriggerContext';
 
 // Skeleton loader component
 function SkeletonLoader() {
@@ -39,18 +40,20 @@ function DetailItem({ icon: IconComponent, label, items }) {
 function Competitors() {
   const [competitors, setCompetitors] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { trigger } = useTrigger(); // Get trigger value from context
+  
   useEffect(() => {
-    // Retrieve data from localStorage
-    const storedData = localStorage.getItem("researcherData");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      if (parsedData?.data?.output_text_1?.competitors) {
-        setCompetitors(parsedData.data.output_text_1.competitors);
+    if (trigger) { // Only fetch data when trigger is true
+      const storedData = localStorage.getItem("researcherData");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (parsedData?.data?.output_text_1?.competitors) {
+          setCompetitors(parsedData.data.output_text_1.competitors);
+        }
       }
+      setLoading(false);
     }
-    setLoading(false); // Set loading to false after data is fetched
-  }, []);
+  }, [trigger]); // Re-run the effect when trigger changes
 
   return (
     <div className="p-8 min-h-screen overflow-hidden -z-10">
@@ -63,8 +66,10 @@ function Competitors() {
         </p>
 
         <div className="space-y-8">
-          {competitors.length === 0 || loading // If no competitors or loading, show skeleton
-            ? [...Array(5)].map((_, index) => <SkeletonLoader key={index} />) // Render skeletons
+          {loading || !trigger // If loading or trigger is not true, show skeleton loader
+            ? [...Array(5)].map((_, index) => <SkeletonLoader key={index} />)
+            : competitors.length === 0 // If no competitors data, still render something
+            ? <div>No competitors data available.</div> 
             : competitors.map((competitor, index) => (
                 <div key={index} className="competitor-card">
                   <div

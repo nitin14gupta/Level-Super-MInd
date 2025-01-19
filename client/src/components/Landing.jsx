@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Spotlight } from "./ui/Spotlight";
+import { useTrigger } from '../context/TriggerContext';
 
 function Landing() {
   const [niche, setNiche] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const { trigger, setTrigger } = useTrigger("");
 
   const handleSubmit = async () => {
     if (!niche || !description) {
@@ -35,12 +37,15 @@ function Landing() {
 
       // Debugging: Verify that data is saved
       const storedData = localStorage.getItem("researcherData");
-      console.log("Data retrieved from localStorage:", JSON.parse(storedData));
 
-      alert("Request sent and data stored successfully!");
+      if (storedData) {
+        // Set trigger to true only after data is saved
+        setTrigger(storedData);
+        
+      }
+
     } catch (error) {
       console.error("Error during API request:", error);
-      alert("An error occurred while sending the request.");
     } finally {
       setLoading(false);
     }

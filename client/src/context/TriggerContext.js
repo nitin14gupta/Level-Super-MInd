@@ -1,10 +1,10 @@
-// context/TriggerContext.js
+"use client"
 import React, { createContext, useState, useContext } from 'react';
 
 const TriggerContext = createContext();
 
 export const TriggerProvider = ({ children }) => {
-  const [trigger, setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState("");
 
   return (
     <TriggerContext.Provider value={{ trigger, setTrigger }}>
