@@ -1,40 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Card } from "@/components/ui/card";
 
-// Skeleton loader component
-function SkeletonLoader() {
-  return (
-    <div className="competitor-card animate-pulse">
-      <div className="h-6 bg-gray-300 w-24 rounded mb-4"></div>
-      <div className="space-y-6">
-        <div className="h-6 bg-gray-300 w-48 rounded mb-2"></div>
-        <div className="space-y-2">
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
+// Dummy data for the solution
+const dummySolution = "This is a dummy enterprise-grade solution that is scalable, secure, and efficient for modern businesses.";
 
 export default function MainSolution() {
-  const [solution, setSolution] = useState([]); 
-  const [loading, setLoading] = useState(true);
-
-  // Retrieve data from localStorage once the component is mounted
-  useEffect(() => {
-    const storedData = localStorage.getItem("researcherData");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      if (parsedData?.data?.output_text_3) {
-        setSolution(parsedData.data.output_text_3); // Update solution state with the data
-      }
-    }
-    setLoading(false);
-  }, []);
+  const [solution, setSolution] = useState(dummySolution); // Set solution to dummy data
 
   return (
     <div className="min-h-screen bg-black p-6 md:p-12">
@@ -52,20 +24,16 @@ export default function MainSolution() {
         {/* Main Content */}
         <div className="space-y-12">
           {/* Main Solution Card */}
-          {loading ? (
-            <SkeletonLoader /> // Show skeleton loader while loading
-          ) : (
-            <Card className="relative bg-[#181E28] border-[#181E28] shadow-none">
-              {/* Content */}
-              <div className="relative p-8 md:p-12 bg-transparent">
-                <div className="max-w-6xl">
-                  <p className="text-lg md:text-xl text-neutral-300 leading-relaxed">
-                    {solution} {/* Render the solution text */}
-                  </p>
-                </div>
+          <Card className="relative bg-[#181E28] border-[#181E28] shadow-none">
+            {/* Content */}
+            <div className="relative p-8 md:p-12 bg-transparent">
+              <div className="max-w-6xl">
+                <p className="text-lg md:text-xl text-neutral-300 leading-relaxed">
+                  {solution} {/* Render the solution text */}
+                </p>
               </div>
-            </Card>
-          )}
+            </div>
+          </Card>
         </div>
       </div>
     </div>

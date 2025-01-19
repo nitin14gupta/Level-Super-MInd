@@ -3,23 +3,6 @@ import React, { useEffect, useState } from "react";
 import { ExternalLink, TrendingUp, Target, Hash, Globe } from "lucide-react";
 import { useTrigger } from '../context/TriggerContext';
 
-// Skeleton loader component
-function SkeletonLoader() {
-  return (
-    <div className="competitor-card animate-pulse">
-      <div className="h-6 bg-gray-300 w-24 rounded mb-4"></div>
-      <div className="space-y-6">
-        <div className="h-6 bg-gray-300 w-48 rounded mb-2"></div>
-        <div className="space-y-2">
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // Updated DetailItem component
 function DetailItem({ icon: IconComponent, label, items }) {
   return (
@@ -39,21 +22,61 @@ function DetailItem({ icon: IconComponent, label, items }) {
 
 function Competitors() {
   const [competitors, setCompetitors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { trigger } = useTrigger(); // Get trigger value from context
-  
+  const { trigger, setTrigger } = useTrigger();
+
+  // Dummy competitors data
+  const dummyCompetitors = [
+    {
+      name: "Competitor 1",
+      link: "https://competitor1.com",
+      tier_focus: 1,
+      strategy: ["Innovative", "Customer-centric"],
+      trends: ["AI", "Blockchain"],
+      keywords: ["Tech", "Future", "Innovation"],
+      social_platform: "LinkedIn",
+    },
+    {
+      name: "Competitor 2",
+      link: "https://competitor2.com",
+      tier_focus: 2,
+      strategy: ["Cost-effective", "Automation"],
+      trends: ["Cloud", "5G"],
+      keywords: ["Efficiency", "Scalability"],
+      social_platform: "Twitter",
+    },
+    {
+      name: "Competitor 3",
+      link: "https://competitor3.com",
+      tier_focus: 3,
+      strategy: ["Niche market", "Agility"],
+      trends: ["AR/VR", "IoT"],
+      keywords: ["Smart", "Innovative"],
+      social_platform: "Facebook",
+    },
+    {
+      name: "Competitor 4",
+      link: "https://competitor4.com",
+      tier_focus: 1,
+      strategy: ["Premium", "Sustainability"],
+      trends: ["Green tech", "AI"],
+      keywords: ["Eco-friendly", "Sustainable"],
+      social_platform: "Instagram",
+    },
+    {
+      name: "Competitor 5",
+      link: "https://competitor5.com",
+      tier_focus: 2,
+      strategy: ["Global expansion", "Collaborative"],
+      trends: ["Blockchain", "AI"],
+      keywords: ["Growth", "Expansion"],
+      social_platform: "LinkedIn",
+    },
+  ];
+
   useEffect(() => {
-    if (trigger) { // Only fetch data when trigger is true
-      const storedData = localStorage.getItem("researcherData");
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        if (parsedData?.data?.output_text_1?.competitors) {
-          setCompetitors(parsedData.data.output_text_1.competitors);
-        }
-      }
-      setLoading(false);
-    }
-  }, [trigger]); // Re-run the effect when trigger changes
+    // Directly set the dummy data
+    setCompetitors(dummyCompetitors);
+  }, [trigger]);
 
   return (
     <div className="p-8 min-h-screen overflow-hidden -z-10">
@@ -66,49 +89,44 @@ function Competitors() {
         </p>
 
         <div className="space-y-8">
-          {loading || !trigger // If loading or trigger is not true, show skeleton loader
-            ? [...Array(5)].map((_, index) => <SkeletonLoader key={index} />)
-            : competitors.length === 0 // If no competitors data, still render something
-            ? <div>No competitors data available.</div> 
-            : competitors.map((competitor, index) => (
-                <div key={index} className="competitor-card">
-                  <div
-                    className={`tier-badge ${
-                      competitor.tier_focus === 1
-                        ? "tier-badge-1"
-                        : competitor.tier_focus === 2
-                        ? "tier-badge-2"
-                        : "tier-badge-3"
-                    }`}
-                  >
-                    {competitor.tier_focus === 1
-                      ? "1st Tier"
-                      : competitor.tier_focus === 2
-                      ? "2nd Tier"
-                      : "3rd Tier"}
-                  </div>
+          {competitors.map((competitor, index) => (
+            <div key={index} className="competitor-card">
+              <div
+                className={`tier-badge ${
+                  competitor.tier_focus === 1
+                    ? "tier-badge-1"
+                    : competitor.tier_focus === 2
+                    ? "tier-badge-2"
+                    : "tier-badge-3"
+                }`}
+              >
+                {competitor.tier_focus === 1
+                  ? "1st Tier"
+                  : competitor.tier_focus === 2
+                  ? "2nd Tier"
+                  : "3rd Tier"}
+              </div>
 
-                  <div className="flex-1 space-y-6">
-                    <a
-                      href={competitor.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="competitor-link"
-                    >
-                      {competitor.name}
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+              <div className="flex-1 space-y-6">
+                <a
+                  href={competitor.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="competitor-link"
+                >
+                  {competitor.name}
+                  <ExternalLink className="w-4 h-4" />
+                </a>
 
-                    <div className="detail-section">
-                      <DetailItem icon={Target} label="Strategy" items={competitor.strategy} />
-                      <DetailItem icon={TrendingUp} label="Trends" items={competitor.trends} />
-                      <DetailItem icon={Hash} label="Keywords" items={competitor.keywords} />
-                      <DetailItem icon={Globe} label="Platform" items={[competitor.social_platform]} />
-                    </div>
-                  </div>
+                <div className="detail-section">
+                  <DetailItem icon={Target} label="Strategy" items={competitor.strategy} />
+                  <DetailItem icon={TrendingUp} label="Trends" items={competitor.trends} />
+                  <DetailItem icon={Hash} label="Keywords" items={competitor.keywords} />
+                  <DetailItem icon={Globe} label="Platform" items={[competitor.social_platform]} />
                 </div>
-              ))
-          }
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

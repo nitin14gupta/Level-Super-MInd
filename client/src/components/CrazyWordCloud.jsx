@@ -4,49 +4,33 @@ import React, { useEffect, useState } from "react";
 function OrderedWordCloud() {
   const [words, setWords] = useState([]); // State to store words
   const [loading, setLoading] = useState(true); // State for loading
-  const [error, setError] = useState(null); // State for errors
 
   useEffect(() => {
-    try {
-      // Retrieve data from localStorage
-      const storedData = localStorage.getItem("researcherData");
-      console.log("Data retrieved from localStorage:", storedData);
+    // Generate dummy data with 50 words
+    const dummyWords = [
+      "Innovation", "Collaboration", "Creativity", "Adaptability", "Motivation",
+      "Strategy", "Growth", "Technology", "Inspiration", "Knowledge",
+      "Success", "Empathy", "Communication", "Leadership", "Vision",
+      "Integrity", "Dedication", "Focus", "Teamwork", "Persistence",
+      "Commitment", "Resilience", "Curiosity", "Analysis", "Planning",
+      "Execution", "Optimization", "Networking", "Problem-solving", "Passion",
+      "Empowerment", "Flexibility", "Support", "Development", "Opportunity",
+      "Impact", "Achievement", "Research", "Creativity", "Mindfulness",
+      "Skillset", "Expertise", "Diversity", "Engagement", "Alignment",
+      "Productivity", "Balance", "Trust", "Innovation", "Excellence", "Quality",
+    ];
 
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-
-        // Safely access the nested property
-        const retrievedWords = parsedData?.data?.output_text_5;
-
-        // Check if retrievedWords is an array
-        if (Array.isArray(retrievedWords)) {
-          setWords(retrievedWords); // Update state with retrieved words
-        } else {
-          setError("Expected data format is not found."); // Handle unexpected format
-        }
-      } else {
-        setError("No data found in localStorage."); // Handle missing data
-      }
-    } catch (err) {
-      console.error("Error parsing data from localStorage:", err);
-      setError("Failed to retrieve or parse data from localStorage.");
-    } finally {
+    // Simulate data fetching
+    setTimeout(() => {
+      setWords(dummyWords); // Set dummy data
       setLoading(false); // Stop loading
-    }
+    }, 1000); // Simulated delay
   }, []);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-white text-xl font-bold">Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-500 text-xl font-bold">{error}</p>
       </div>
     );
   }
