@@ -5,19 +5,52 @@ import { Card } from "@/components/ui/card";
 import { Sparkles, Quote } from "lucide-react";
 
 function GeneratedTagline() {
-  const [taglines] = useState([
-    "Empower your online presence.",
-    "Connecting creators to their fans.",
-    "Your platform for intimate connections.",
-  ]);
+  const [taglines, setTaglines] = useState([]); // State to store taglines from localStorage
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % taglines.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [taglines.length]);
+    try {
+      // Retrieve data from localStorage
+      const storedData = localStorage.getItem("researcherData");
+      console.log("Data retrieved from localStorage:", storedData);
+
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        const outputText4 = parsedData?.data?.output_text_4;
+
+        // Ensure output_text_4 is an array of objects and extract taglines
+        if (Array.isArray(outputText4)) {
+          const retrievedTaglines = outputText4.map((item) => item.tagline);
+          setTaglines(retrievedTaglines); // Update state with retrieved taglines
+        } else {
+          console.error("output_text_4 is not an array or is missing.");
+        }
+      } else {
+        console.error("No data found in localStorage.");
+      }
+    } catch (err) {
+      console.error("Error parsing data from localStorage:", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (taglines.length > 0) {
+      const interval = setInterval(() => {
+        setActiveIndex((current) => (current + 1) % taglines.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [taglines]);
+
+  if (taglines.length === 0) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white text-xl font-bold">
+          No taglines available. Please check your localStorage.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center ">
@@ -26,14 +59,16 @@ function GeneratedTagline() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-primary animate-pulse" />
-              <h1 className="text-2xl font-semibold tracking-tight text-white">Generated Taglines</h1>
+              <h1 className="text-2xl font-semibold tracking-tight text-white">
+                Generated Taglines
+              </h1>
             </div>
-            <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center  justify-center">
+            <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center">
               <Quote className="w-4 h-4 text-white" />
             </div>
           </div>
 
-          <div className="relative h-[120px] overflow-hidden ">
+          <div className="relative h-[120px] overflow-hidden">
             {taglines.map((tagline, index) => (
               <div
                 key={index}
@@ -45,7 +80,7 @@ function GeneratedTagline() {
               >
                 <div className="relative">
                   <div className="absolute -left-4 top-1/2 w-2 h-2 rounded-full bg-primary/50" />
-                  <p className="text-2xl font-light  italic pl-4 text-white">
+                  <p className="text-2xl font-light italic pl-4 text-white">
                     {tagline}
                   </p>
                 </div>
