@@ -1,28 +1,57 @@
-'use client'
-import React, { useState } from 'react';
-import { Spotlight } from './ui/Spotlight';
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
+import { Spotlight } from "./ui/Spotlight";
 
 function Landing() {
-  const [niche, setNiche] = useState('');
-  const [description, setDescription] = useState('');
+  const [niche, setNiche] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!niche || !description) {
+      alert("Please fill out both fields before submitting.");
+      return;
+    }
+
+    const payload = {
+      description,
+      industry: niche,
+    };
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "https://level-super-mind.onrender.com/researcher",
+        payload
+      );
+      console.log("Response:", response.data);
+      alert("Request sent successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while sending the request.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-neutral-950">
       <Spotlight />
-      {/* Header */}
-      
-
-      {/* Main Content */}
       <main className="mx-auto max-w-3xl px-4 pt-32 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-neutral-100 sm:text-6xl">
-          MarketLens
+            MarketLens
           </h1>
-          <p className="mt-6 text-xl   leading-8 text-neutral-400">
-          Clarity through competition
+          <p className="mt-6 text-xl leading-8 text-neutral-400">
+            Clarity through competition
           </p>
         </div>
-        <div className="mt-6 my-auto text-xl leading-8 text-neutral-400">Tell us Your Niche Industry and Describe your Idea and we will Manage the Rest</div>
+        <div className="mt-6 text-xl leading-8 text-neutral-400">
+          Tell us Your Niche Industry and Describe your Idea and we will Manage
+          the Rest
+        </div>
 
         <div className="mt-16 space-y-8">
           <div className="input-container">
@@ -35,8 +64,6 @@ function Landing() {
               placeholder="Enter your Niche Industry"
               className="input-animated"
             />
-            <div className="placeholder-suggestions pl-6 pt-4" 
-                 aria-hidden="true"></div>
           </div>
           <div className="input-container">
             <div className="input-flash"></div>
@@ -50,8 +77,12 @@ function Landing() {
           </div>
 
           <div className="flex justify-center pt-8">
-            <button className="search-button">
-              Let the Magic Begin
+            <button
+              className="search-button"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Let the Magic Begin"}
             </button>
           </div>
         </div>

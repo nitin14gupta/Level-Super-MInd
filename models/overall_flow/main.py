@@ -5,6 +5,7 @@ import requests
 import json
 from dotenv import load_dotenv
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -15,7 +16,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://marketlenss.vercel.app","http://localhost:3000","localhost:300"],  # Allow only this origin
+    allow_origins=["https://marketlenss.vercel.app","http://localhost:3000","http://localhost:3001"],  # Allow only this origin
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers
