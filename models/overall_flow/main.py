@@ -13,6 +13,13 @@ load_dotenv()
 # Initialize FastAPI app
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://marketlenss.vercel.app","http://localhost:3000","localhost:300"],  # Allow only this origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 # Constants
 BASE_API_URL = os.getenv('BASE_API_URL')
 LANGFLOW_ID = os.getenv('LANGFLOW_ID')
