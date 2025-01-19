@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Brain } from "lucide-react";
 
@@ -26,16 +25,23 @@ export default function FutureTrendPrediction() {
   const [trends, setTrends] = useState([]); // State to hold fetched data
   const [loading, setLoading] = useState(true); // State for loading
 
-  // Retrieve data from localStorage once the component is mounted
   useEffect(() => {
-    const storedData = localStorage.getItem("researcherData");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      if (parsedData?.data?.output_text_6) {
-        setTrends(parsedData.data.output_text_6); // Update trends state with output_text_6 data
+    try {
+      const storedData = localStorage.getItem("researcherData");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (parsedData?.data?.output_text_6) {
+          setTrends(parsedData.data.output_text_6); // Update trends state with output_text_6 data
+        } else {
+          console.warn("No 'output_text_6' found in localStorage data.");
+        }
+      } else {
+        console.warn("No 'researcherData' found in localStorage.");
       }
+    } catch (error) {
+      console.error("Error parsing localStorage data:", error);
     }
-    setLoading(false);
+    setLoading(false); // Stop loading
   }, []);
 
   return (
@@ -58,29 +64,35 @@ export default function FutureTrendPrediction() {
 
         {/* Trends Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {loading
-            ? Array.from({ length: 6 }).map((_, idx) => <SkeletonLoader key={idx} />)
-            : trends.map((trend, idx) => (
-                <Card
-                  key={idx}
-                  className="group relative overflow-hidden bg-[#161D24] border border-primary/10 hover:border-primary/20 transition-colors duration-300"
-                >
-                  {/* Animated Gradient Border */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  
-                  {/* Content */}
-                  <div className="relative p-6 space-y-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-neutral-300 mb-2">
-                        {trend?.title || "No title available"}
-                      </h3>
-                      <p className="text-sm text-neutral-400">
-                        {trend?.description || "No description available"}
-                      </p>
-                    </div>
+          {loading ? (
+            Array.from({ length: 6 }).map((_, idx) => <SkeletonLoader key={idx} />)
+          ) : trends && trends.length > 0 ? (
+            trends.map((trend, idx) => (
+              <Card
+                key={idx}
+                className="group relative overflow-hidden bg-[#161D24] border border-primary/10 hover:border-primary/20 transition-colors duration-300"
+              >
+                {/* Animated Gradient Border */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                {/* Content */}
+                <div className="relative p-6 space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-neutral-300 mb-2">
+                      {trend?.title || "No title available"}
+                    </h3>
+                    <p className="text-sm text-neutral-400">
+                      {trend?.description || "No description available"}
+                    </p>
                   </div>
-                </Card>
-              ))}
+                </div>
+              </Card>
+            ))
+          ) : (
+            <p className="text-neutral-400 text-center col-span-full">
+              No trends available at the moment.
+            </p>
+          )}
         </div>
       </div>
     </div>

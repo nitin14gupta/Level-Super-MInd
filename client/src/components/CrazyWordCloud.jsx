@@ -10,21 +10,28 @@ function OrderedWordCloud() {
     try {
       // Retrieve data from localStorage
       const storedData = localStorage.getItem("researcherData");
-      console.log("Data retrieved from localStorage:", JSON.parse(storedData));
+      console.log("Data retrieved from localStorage:", storedData);
 
       if (storedData) {
         const parsedData = JSON.parse(storedData);
-        const retrievedWords = parsedData?.data?.output_text_5 || [];
-        setWords(retrievedWords); // Update state with retrieved words
+
+        // Safely access the nested property
+        const retrievedWords = parsedData?.data?.output_text_5;
+
+        // Check if retrievedWords is an array
+        if (Array.isArray(retrievedWords)) {
+          setWords(retrievedWords); // Update state with retrieved words
+        } else {
+          setError("Expected data format is not found."); // Handle unexpected format
+        }
       } else {
         setError("No data found in localStorage."); // Handle missing data
       }
-
-      setLoading(false); // Stop loading
     } catch (err) {
       console.error("Error parsing data from localStorage:", err);
-      setError("Failed to retrieve data from localStorage.");
-      setLoading(false);
+      setError("Failed to retrieve or parse data from localStorage.");
+    } finally {
+      setLoading(false); // Stop loading
     }
   }, []);
 
