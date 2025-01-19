@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 function BestHooks() {
   const [hooksData, setHooksData] = useState([]); // State to hold hooks data
@@ -8,26 +7,25 @@ function BestHooks() {
   const [error, setError] = useState(null); // State for errors
 
   useEffect(() => {
-    // Fetch data from the API
-    const fetchData = async () => {
-      try {
-        const response = await axios.post("https://level-super-mind.onrender.com/researcher", {
-          description: "I'm thinking to open a business for e-commerce of shoes company",
-          industry: "e-commerce",
-        });
+    try {
+      // Retrieve data from localStorage
+      const storedData = localStorage.getItem("researcherData");
+      console.log("Data retrieved from localStorage:", JSON.parse(storedData));
 
-        // Extract hooks data from the response
-        const hooks = response.data?.data?.output_text_2?.top_competitors || [];
-        setHooksData(hooks); // Update the state with the hooks data
-        setLoading(false); // Set loading to false
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to fetch data. Please try again later.");
-        setLoading(false);
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        const hooks = parsedData?.data?.output_text_2?.top_competitors || [];
+        setHooksData(hooks); // Update state with retrieved data
+      } else {
+        setError("No data found in localStorage."); // Handle missing data
       }
-    };
 
-    fetchData(); // Call the function to fetch data
+      setLoading(false); // Set loading to false
+    } catch (err) {
+      console.error("Error parsing data from localStorage:", err);
+      setError("Failed to retrieve data from localStorage.");
+      setLoading(false);
+    }
   }, []); // Empty dependency array to run only once
 
   if (loading) {
