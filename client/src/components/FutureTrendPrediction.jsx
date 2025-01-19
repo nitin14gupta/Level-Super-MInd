@@ -1,18 +1,11 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import axios from "axios"; // Import Axios
 import { 
-  Brain, 
-  Cpu, 
-  Globe2, 
-  Shield, 
-  Fingerprint, 
-  Rocket,
-  Network,
-  Laptop,
-  Cloud,
-  Blocks
+  Brain
 } from "lucide-react";
+import { useEffect } from "react";
 
 export default function FutureTrendPrediction() {
   const trends = [
@@ -22,37 +15,24 @@ export default function FutureTrendPrediction() {
     {
       title: "AI-powered systems becoming integral to business operations",
     },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
-    {
-      title: "AI-powered systems becoming integral to business operations",
-    },
   ];
+
+  // Function to send POST request
+  const sendDataToServer = async () => {
+    try {
+      const response = await axios.post("https://level-super-mind.onrender.com/researcher", {
+        trends: trends.map((trend) => trend.title), // Sending an array of trend titles
+      });
+      console.log("Data sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
+
+  // Use Effect to send data when the component mounts
+  useEffect(() => {
+    sendDataToServer();
+  }, []);
 
   return (
     <div className="min-h-screen bg-black p-6 md:p-12">
@@ -61,7 +41,6 @@ export default function FutureTrendPrediction() {
         <div className="text-center space-y-6 mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 mb-4">
             <Brain className="w-4 h-4 text-primary/70" />
-
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text text-transparent text-white">
