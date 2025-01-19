@@ -11,7 +11,7 @@ function BestHooks() {
     // Fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.post("http://0.0.0.0:8000/researcher", {
+        const response = await axios.post("https://level-super-mind.onrender.com/researcher", {
           description: "I'm thinking to open a business for e-commerce of shoes company",
           industry: "e-commerce",
         });
