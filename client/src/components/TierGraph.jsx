@@ -27,7 +27,7 @@ const pieData = [
   { name: "Tier", value: monthlyData.reduce((acc, curr) => acc + curr.Desktop, 0) },
 ];
 
-const COLORS = ["#6B7280", "#374151"]; // Neutral shades (gray)
+const COLORS = ["#cccccc", "#113c85"]; // Neutral shades (gray)
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {

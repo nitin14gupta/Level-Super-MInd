@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Landing from "@/components/Landing";
 import Competitors from "@/components/Competitors";
-import SatisfactoryAnalysis from "@/components/SatisfactoryAnalysis";
+// import SatisfactoryAnalysis from "@/components/SatisfactoryAnalysis";
 import BestHooks from "@/components/BestHooks";
 import CrazyWordCloud from "@/components/CrazyWordCloud";
 import GeneratedTagline from "@/components/GeneratedTagline";
@@ -21,7 +21,7 @@ export default function Home() {
       <FutureTrendPrediction />
       <GeneratedTagline />
       <MainSolution />                                                                      
-      <SatisfactoryAnalysis />
+      {/* <SatisfactoryAnalysis /> */}
       <TierGraph />
     </div>
   );
