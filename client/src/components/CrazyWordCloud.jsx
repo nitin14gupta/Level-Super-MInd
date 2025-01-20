@@ -2,35 +2,50 @@
 import React, { useEffect, useState } from "react";
 
 function OrderedWordCloud() {
-  const [words, setWords] = useState([]); // State to store words
-  const [loading, setLoading] = useState(true); // State for loading
+  const [words, setWords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Generate dummy data with 50 words
-    const dummyWords = [
-      "Innovation", "Collaboration", "Creativity", "Adaptability", "Motivation",
-      "Strategy", "Growth", "Technology", "Inspiration", "Knowledge",
-      "Success", "Empathy", "Communication", "Leadership", "Vision",
-      "Integrity", "Dedication", "Focus", "Teamwork", "Persistence",
-      "Commitment", "Resilience", "Curiosity", "Analysis", "Planning",
-      "Execution", "Optimization", "Networking", "Problem-solving", "Passion",
-      "Empowerment", "Flexibility", "Support", "Development", "Opportunity",
-      "Impact", "Achievement", "Research", "Creativity", "Mindfulness",
-      "Skillset", "Expertise", "Diversity", "Engagement", "Alignment",
-      "Productivity", "Balance", "Trust", "Innovation", "Excellence", "Quality",
-    ];
+    try {
+      // Retrieve data from localStorage
+      const storedData = localStorage.getItem("researcherData");
+      console.log("Data retrieved from localStorage:", storedData);
 
-    // Simulate data fetching
-    setTimeout(() => {
-      setWords(dummyWords); // Set dummy data
-      setLoading(false); // Stop loading
-    }, 1000); // Simulated delay
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        console.log("Parsed Data:", parsedData);
+        const retrievedWords = parsedData?.data?.output_text_5;
+        if (Array.isArray(retrievedWords)) {
+          setWords(retrievedWords);
+        } else {
+          setError("Expected data format is not found.");
+          console.log("Parsed Data:", parsedData);
+
+        }
+      } else {
+        setError("No data found in localStorage.");
+      }
+    } catch (err) {
+      console.error("Error parsing data from localStorage:", err);
+      setError("Failed to retrieve or parse data from localStorage.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-white text-xl font-bold">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-500 text-xl font-bold">{error}</p>
       </div>
     );
   }

@@ -1,35 +1,34 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Quote } from "lucide-react";
 
-// Skeleton loader component
-function SkeletonLoader() {
-  return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <p className="text-white text-xl font-bold animate-pulse">Loading taglines...</p>
-    </div>
-  );
-}
-
 function GeneratedTagline() {
-  const [taglines, setTaglines] = useState([]); // State to store taglines
+  const [taglines, setTaglines] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    // Simulated backend call with dummy taglines
-    const dummyTaglines = [
-      "Empowering the future, one step at a time.",
-      "Innovation meets creativity to inspire change.",
-      "Simplifying solutions for a complex world.",
-    ];
+    try {
+      const storedData = localStorage.getItem("researcherData");
+      console.log("Data retrieved from localStorage:", storedData);
 
-    // Simulate a delay for loading state
-    setTimeout(() => {
-      setTaglines(dummyTaglines);
-    }, 1000);
-  }, []); // Empty dependency array to run only once
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        const outputText4 = parsedData?.output_text_4;
+
+        if (Array.isArray(outputText4)) {
+          const retrievedTaglines = outputText4.map((item) => item.tagline);
+          setTaglines(retrievedTaglines);
+        } else {
+          console.error("output_text_4 is not an array or is missing.");
+        }
+      } else {
+        console.error("No data found in localStorage.");
+      }
+    } catch (err) {
+      console.error("Error parsing data from localStorage:", err);
+    }
+  }, []);
 
   useEffect(() => {
     if (taglines.length > 0) {
@@ -40,13 +39,18 @@ function GeneratedTagline() {
     }
   }, [taglines]);
 
-  // Display skeleton loader while taglines are being fetched
   if (taglines.length === 0) {
-    return <SkeletonLoader />;
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white text-xl font-bold">
+          No taglines available. Please check your localStorage.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
+    <div className="min-h-screen bg-black flex items-center justify-center ">
       <Card className="w-full max-w-2xl bg-[#181E28] border border-muted/10">
         <div className="p-8 space-y-8">
           <div className="flex items-center justify-between">
@@ -65,13 +69,18 @@ function GeneratedTagline() {
             {taglines.map((tagline, index) => (
               <div
                 key={index}
-                className={`absolute w-full transition-all duration-500 ease-in-out ${
+                className={`absolute w-full transition-all duration-100 ease-in-out ${
                   index === activeIndex
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0"
                 }`}
               >
-                <p className="text-2xl font-light italic text-white">{tagline}</p>
+                <div className="relative">
+                  <div className="absolute -left-4 top-1/2 w-2 h-2 rounded-full bg-primary/50" />
+                  <p className="text-2xl font-light italic pl-4 text-white">
+                    {tagline}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
