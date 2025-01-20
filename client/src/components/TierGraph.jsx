@@ -17,7 +17,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// Chart configuration
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -29,7 +28,7 @@ const chartConfig = {
   },
 };
 
-// Skeleton Loader for data fetching
+
 function SkeletonLoader() {
   return (
     <div className="competitor-card animate-pulse">
@@ -46,7 +45,6 @@ function SkeletonLoader() {
   );
 }
 
-// Component to render Area chart
 function Component({ tierData }) {
   const totalDesktopPercentage = tierData?.tier1 ? 100 - tierData.tier1 : 100;
 
@@ -115,7 +113,7 @@ function Component({ tierData }) {
   );
 }
 
-// Container component to render Bar chart
+
 function Container({ tierData }) {
   const totalDesktopPercentage = tierData?.tier1 ? 100 - tierData.tier1 : 100;
 
