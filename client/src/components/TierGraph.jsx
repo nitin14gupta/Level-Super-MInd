@@ -136,14 +136,11 @@ function Container({ tierData }) {
   );
 }
 
-// Main component for handling data fetching and rendering
 export default function TierGraph() {
-  const { trigger, setTrigger } = useTrigger([]); // Assuming `useTrigger` is a valid context hook
   const [loading, setLoading] = useState(true);
   const [tierData, setTierData] = useState({});
   const [error, setError] = useState(null);
 
-  // Fetch data from localStorage and parse it
   useEffect(() => {
     try {
       const storedData = localStorage.getItem("researcherData");
@@ -172,24 +169,6 @@ export default function TierGraph() {
 
   return (
     <>
-      <div className="text-neutral-200 p-8 rounded-lg shadow-lg">
-        <p className="text-neutral-400">
-          Graph shows the data in 2 pie and 1 bar form:
-        </p>
-        {error ? (
-          <p className="text-red-500">{error}</p>
-        ) : (
-          trigger.map((item, index) => {
-            return (
-              <div key={index} className="my-4">
-                <p className="font-semibold text-neutral-100">{item.name}</p>
-                <p className="text-neutral-300">{item.value}</p>
-              </div>
-            );
-          })
-        )}
-      </div>
-
       <div className="grid grid-cols-2 gap-6 bg-black p-10 align-baseline">
         <div className="grid grid-cols-1 gap-6">
           
