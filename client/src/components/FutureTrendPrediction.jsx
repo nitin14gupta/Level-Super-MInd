@@ -3,27 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Brain } from "lucide-react";
-import { useTrigger } from "../context/TriggerContext";
-
-// Dummy data for trends
-const dummyData = {
-  data: {
-    output_text_6: [
-      {
-        title: "AI-Driven Automation",
-        description: "Leveraging AI to streamline workflows and improve productivity.",
-      },
-      {
-        title: "Blockchain Integration",
-        description: "Enhanced security and transparency through decentralized solutions.",
-      },
-      {
-        title: "Quantum Computing",
-        description: "Unlocking new possibilities with advanced computational power.",
-      },
-    ],
-  },
-};
 
 // Skeleton loader component
 function SkeletonLoader() {
@@ -47,8 +26,21 @@ export default function FutureTrendPrediction() {
   const [loading, setLoading] = useState(true); // State for loading
 
   useEffect(() => {
-    // Using dummy data instead of localStorage
-    setTrends(dummyData.data.output_text_6);
+    try {
+      const storedData = localStorage.getItem("researcherData");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (parsedData?.data?.output_text_6) {
+          setTrends(parsedData.data.output_text_6); // Update trends state with output_text_6 data
+        } else {
+          console.warn("No 'output_text_6' found in localStorage data.");
+        }
+      } else {
+        console.warn("No 'researcherData' found in localStorage.");
+      }
+    } catch (error) {
+      console.error("Error parsing localStorage data:", error);
+    }
     setLoading(false); // Stop loading
   }, []);
 
@@ -87,9 +79,11 @@ export default function FutureTrendPrediction() {
                 <div className="relative p-6 space-y-4">
                   <div>
                     <h3 className="text-lg font-semibold text-neutral-300 mb-2">
-                      {trend.title}
+                      {trend?.title || "No title available"}
                     </h3>
-                    <p className="text-sm text-neutral-400">{trend.description}</p>
+                    <p className="text-sm text-neutral-400">
+                      {trend?.description || "No description available"}
+                    </p>
                   </div>
                 </div>
               </Card>

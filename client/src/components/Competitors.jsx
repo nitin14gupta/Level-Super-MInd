@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { ExternalLink, TrendingUp, Target, Hash, Globe } from "lucide-react";
-import { useTrigger } from '../context/TriggerContext';
+import { useTrigger } from '@/context/TriggerContext';
 
 // Updated DetailItem component
 function DetailItem({ icon: IconComponent, label, items }) {
@@ -22,61 +22,11 @@ function DetailItem({ icon: IconComponent, label, items }) {
 
 function Competitors() {
   const [competitors, setCompetitors] = useState([]);
-  const { trigger, setTrigger } = useTrigger();
+  const { trigger, setTrigger } = useTrigger([]);
 
-  // Dummy competitors data
-  const dummyCompetitors = [
-    {
-      name: "Competitor 1",
-      link: "https://competitor1.com",
-      tier_focus: 1,
-      strategy: ["Innovative", "Customer-centric"],
-      trends: ["AI", "Blockchain"],
-      keywords: ["Tech", "Future", "Innovation"],
-      social_platform: "LinkedIn",
-    },
-    {
-      name: "Competitor 2",
-      link: "https://competitor2.com",
-      tier_focus: 2,
-      strategy: ["Cost-effective", "Automation"],
-      trends: ["Cloud", "5G"],
-      keywords: ["Efficiency", "Scalability"],
-      social_platform: "Twitter",
-    },
-    {
-      name: "Competitor 3",
-      link: "https://competitor3.com",
-      tier_focus: 3,
-      strategy: ["Niche market", "Agility"],
-      trends: ["AR/VR", "IoT"],
-      keywords: ["Smart", "Innovative"],
-      social_platform: "Facebook",
-    },
-    {
-      name: "Competitor 4",
-      link: "https://competitor4.com",
-      tier_focus: 1,
-      strategy: ["Premium", "Sustainability"],
-      trends: ["Green tech", "AI"],
-      keywords: ["Eco-friendly", "Sustainable"],
-      social_platform: "Instagram",
-    },
-    {
-      name: "Competitor 5",
-      link: "https://competitor5.com",
-      tier_focus: 2,
-      strategy: ["Global expansion", "Collaborative"],
-      trends: ["Blockchain", "AI"],
-      keywords: ["Growth", "Expansion"],
-      social_platform: "LinkedIn",
-    },
-  ];
-
-  useEffect(() => {
-    // Directly set the dummy data
-    setCompetitors(dummyCompetitors);
-  }, [trigger]);
+  // useEffect(() => {
+  //   setCompetitors(dummyCompetitors);
+  // }, [trigger]);
 
   return (
     <div className="p-8 min-h-screen overflow-hidden -z-10">

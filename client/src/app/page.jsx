@@ -1,3 +1,5 @@
+'use client';
+'use strict';
 import Image from "next/image";
 import Landing from "@/components/Landing";
 import Competitors from "@/components/Competitors";
@@ -17,9 +19,9 @@ export default function Home() {
       <Competitors />
       <div className="flex justify-around"><BestHooks />
       <CrazyWordCloud /></div>
-      <FutureTrendPrediction />
+      {/* <FutureTrendPrediction /> */}
       <GeneratedTagline />
-      <MainSolution />                                                                      
+      <MainSolution />           
       <TierGraph />
     </div>
   );
