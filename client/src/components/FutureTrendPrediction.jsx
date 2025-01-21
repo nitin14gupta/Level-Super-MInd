@@ -1,48 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Card } from "@/components/ui/card";
 import { Brain } from "lucide-react";
 
-// Skeleton loader component
-function SkeletonLoader() {
-  return (
-    <div className="competitor-card animate-pulse">
-      <div className="h-6 bg-gray-300 w-24 rounded mb-4"></div>
-      <div className="space-y-6">
-        <div className="h-6 bg-gray-300 w-48 rounded mb-2"></div>
-        <div className="space-y-2">
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-          <div className="h-4 bg-gray-200 w-40 rounded"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function FutureTrendPrediction() {
-  const [trends, setTrends] = useState([]); // State to hold fetched data
-  const [loading, setLoading] = useState(true); // State for loading
-
-  useEffect(() => {
-    try {
-      const storedData = localStorage.getItem("researcherData");
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        if (parsedData?.data?.output_text_6) {
-          setTrends(parsedData.data.output_text_6); // Update trends state with output_text_6 data
-        } else {
-          console.warn("No 'output_text_6' found in localStorage data.");
-        }
-      } else {
-        console.warn("No 'researcherData' found in localStorage.");
-      }
-    } catch (error) {
-      console.error("Error parsing localStorage data:", error);
-    }
-    setLoading(false); // Stop loading
-  }, []);
+export default function FutureTrendPrediction({ solution }) {
+  const trends = solution
+    ? Object.entries(solution).map(([key, value]) => ({
+        title: value,
+        description: key,
+      }))
+    : [];
 
   return (
     <div className="min-h-screen bg-black p-6 md:p-12">
@@ -64,9 +32,7 @@ export default function FutureTrendPrediction() {
 
         {/* Trends Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {loading ? (
-            Array.from({ length: 6 }).map((_, idx) => <SkeletonLoader key={idx} />)
-          ) : trends && trends.length > 0 ? (
+          {trends.length > 0 ? (
             trends.map((trend, idx) => (
               <Card
                 key={idx}
@@ -79,10 +45,10 @@ export default function FutureTrendPrediction() {
                 <div className="relative p-6 space-y-4">
                   <div>
                     <h3 className="text-lg font-semibold text-neutral-300 mb-2">
-                      {trend?.title || "No title available"}
+                      {trend.title || "No title available"}
                     </h3>
                     <p className="text-sm text-neutral-400">
-                      {trend?.description || "No description available"}
+                      {trend.description || "No description available"}
                     </p>
                   </div>
                 </div>
