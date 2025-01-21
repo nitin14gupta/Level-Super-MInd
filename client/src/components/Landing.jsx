@@ -29,19 +29,14 @@ function Landing() {
         payload
       );
 
-      // Debugging: Log the response
       console.log("Response from API:", response.data);
 
       // Save response to localStorage
       localStorage.setItem("researcherData", JSON.stringify(response.data));
-
-      // Debugging: Verify that data is saved
       const storedData = localStorage.getItem("researcherData");
 
       if (storedData) {
-        // Set trigger to true only after data is saved
         setTrigger(storedData);
-        
       }
 
     } catch (error) {

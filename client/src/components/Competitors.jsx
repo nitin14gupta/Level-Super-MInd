@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ExternalLink, TrendingUp, Target, Hash, Globe } from "lucide-react";
 
-// Skeleton loader component
 function SkeletonLoader() {
   return (
     <div className="competitor-card animate-pulse">
@@ -19,7 +18,6 @@ function SkeletonLoader() {
   );
 }
 
-// Updated DetailItem component
 function DetailItem({ icon: IconComponent, label, items }) {
   return (
     <div className="detail-item -z-10">
@@ -37,20 +35,39 @@ function DetailItem({ icon: IconComponent, label, items }) {
 }
 
 function Competitors() {
-  const [competitors, setCompetitors] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Hardcoded data for testing
+  const competitorsData = [
+    {
+      name: "Competitor 1",
+      link: "https://competitor1.com",
+      tier_focus: 1,
+      strategy: ["Strategy A", "Strategy B"],
+      trends: ["Trend 1", "Trend 2"],
+      keywords: ["Keyword 1", "Keyword 2"],
+      social_platform: "Instagram",
+    },
+    {
+      name: "Competitor 2",
+      link: "https://competitor2.com",
+      tier_focus: 2,
+      strategy: ["Strategy C"],
+      trends: ["Trend 3"],
+      keywords: ["Keyword 3", "Keyword 4"],
+      social_platform: "Facebook",
+    },
+    {
+      name: "Competitor 3",
+      link: "https://competitor3.com",
+      tier_focus: 3,
+      strategy: ["Strategy D", "Strategy E"],
+      trends: ["Trend 4", "Trend 5"],
+      keywords: ["Keyword 5"],
+      social_platform: "Twitter",
+    },
+  ];
 
-  useEffect(() => {
-    // Retrieve data from localStorage
-    const storedData = localStorage.getItem("researcherData");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      if (parsedData?.data?.output_text_1?.competitors) {
-        setCompetitors(parsedData.data.output_text_1.competitors);
-      }
-    }
-    setLoading(false); // Set loading to false after data is fetched
-  }, []);
+  const [competitors, setCompetitors] = useState(competitorsData);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="p-8 min-h-screen overflow-hidden -z-10">
@@ -63,9 +80,9 @@ function Competitors() {
         </p>
 
         <div className="space-y-8">
-          {competitors.length === 0 || loading // If no competitors or loading, show skeleton
-            ? [...Array(5)].map((_, index) => <SkeletonLoader key={index} />) // Render skeletons
-            : competitors.map((competitor, index) => (
+          {competitors.length === 0 || loading
+            ? [...Array(5)].map((_, index) => <SkeletonLoader key={index} />)
+            : competitors?.map((competitor, index) => (
                 <div key={index} className="competitor-card">
                   <div
                     className={`tier-badge ${
