@@ -1,56 +1,25 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Sparkles, Quote } from "lucide-react";
 
-function GeneratedTagline() {
-  const [taglines, setTaglines] = useState([]);
+function GeneratedTagline({ solution }) {
+  const taglines = solution.taglines;
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    try {
-      const storedData = localStorage.getItem("researcherData");
-      console.log("Data retrieved from localStorage:", storedData);
-
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        const outputText4 = parsedData?.output_text_4;
-
-        if (Array.isArray(outputText4)) {
-          const retrievedTaglines = outputText4.map((item) => item.tagline);
-          setTaglines(retrievedTaglines);
-        } else {
-          console.error("output_text_4 is not an array or is missing.");
-        }
-      } else {
-        console.error("No data found in localStorage.");
-      }
-    } catch (err) {
-      console.error("Error parsing data from localStorage:", err);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (taglines.length > 0) {
+    if (taglines?.length > 0) {
       const interval = setInterval(() => {
         setActiveIndex((current) => (current + 1) % taglines.length);
-      }, 3000);
+      }, 2000);
       return () => clearInterval(interval);
     }
   }, [taglines]);
 
-  if (taglines.length === 0) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-white text-xl font-bold">
-          No taglines available. Please check your localStorage.
-        </p>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center ">
+    <div className="min-h-screen bg-black flex items-center justify-center">
       <Card className="w-full max-w-2xl bg-[#181E28] border border-muted/10">
         <div className="p-8 space-y-8">
           <div className="flex items-center justify-between">
@@ -66,7 +35,7 @@ function GeneratedTagline() {
           </div>
 
           <div className="relative h-[120px] overflow-hidden">
-            {taglines.map((tagline, index) => (
+            {taglines?.map((tagline, index) => (
               <div
                 key={index}
                 className={`absolute w-full transition-all duration-100 ease-in-out ${
@@ -86,7 +55,7 @@ function GeneratedTagline() {
           </div>
 
           <div className="flex justify-center gap-2">
-            {taglines.map((_, index) => (
+            {taglines?.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
